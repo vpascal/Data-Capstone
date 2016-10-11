@@ -36,13 +36,31 @@ ui <- fluidPage(theme = "style.css",  fluidRow(column(
 ,
 
 div(
-          fluidRow(class='w3-row-padding w3-center w3-margin-top', div(
-             box("You entered:",textOutput("myinput"),icon("download",lib = "glyphicon"))),
-             div(box(" Next predicted word:", textOutput("value"), icon("ok-circle",lib = "glyphicon"))),
-             div(box("Other candidates:",textOutput("candidates"),icon("cog", lib="glyphicon"))),
-             div(box("How?",p(class="description","Using ngram model and a simple backoff algorithm"),icon("info-sign",lib = "glyphicon")))
-             
-           )))
+  fluidRow(class = 'w3-row-padding w3-center w3-margin-top', div(box(
+    "You entered:",
+    textOutput("myinput"),
+    icon("download", lib = "glyphicon")
+  )),
+  div(
+    box(
+      " Next predicted word:",
+      textOutput("value"),
+      icon("ok-circle", lib = "glyphicon")
+    )
+  ),
+  div(
+    box(
+      "Other candidates:",
+      textOutput("candidates"),
+      icon("cog", lib = "glyphicon")
+    )
+  ),
+  div(box(
+    "How?",
+    p(class = "description", "Using ngram model and a simple backoff algorithm"),
+    icon("info-sign", lib = "glyphicon")
+  )))
+))
 
 
 
@@ -52,25 +70,27 @@ server <- shinyServer(function(input, output) {
     myfile <- input(input$input)
   })
   
-dataset <- reactive({
-  predictor(input_phrase(),
-            bigram_table = bigram_table,
-            trigram_table = trigram_table)
-  
-})  
-  output$value <- renderText({ as.character(dataset()$temp1[1])
+  dataset <- reactive({
+    predictor(input_phrase(),
+              bigram_table = bigram_table,
+              trigram_table = trigram_table)
+    
+  })
+  output$value <- renderText({
+    as.character(dataset()$temp1[1])
     
   })
   
-output$myinput <- renderText({input$input})  
-
-output$candidates <- renderText({
-  
-   paste(dataset()$candidates, collapse = ", ")
- 
-                                               
+  output$myinput <- renderText({
+    input$input
   })
-
+  
+  output$candidates <- renderText({
+    paste(dataset()$candidates, collapse = ", ")
+    
+    
+  })
+  
   
 })
 
