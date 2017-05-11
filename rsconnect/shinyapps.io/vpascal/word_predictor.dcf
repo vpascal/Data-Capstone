@@ -1,0 +1,10 @@
+name: word_predictor
+account: vpascal
+server: shinyapps.io
+appId: 127784
+bundleId: 580110
+url: https://vpascal.shinyapps.io/word_predictor/
+when: 1475885462.83181
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: www/w3.css
